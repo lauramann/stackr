@@ -3,7 +3,7 @@ import './App.css';
 import { search } from '../../flipp/flipp';
 import {Input} from 'antd';
 import GridView from '../gridView/GridView';
-import {getData} from '../../saveca/saveca';
+// import {getData} from '../../saveca/saveca';
 
 const { Search } = Input;
 
@@ -19,7 +19,7 @@ class App extends React.Component {
     search('butter', value).then(data => {
       this.setState({data: data.items})
     })
-    getData();
+    // getData();
   }
 
   render() {
@@ -45,26 +45,5 @@ class App extends React.Component {
     )
   }
 }
-
-// function App() {
-//   console.log(search('butter', 'm5v4a9'));
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default App;
