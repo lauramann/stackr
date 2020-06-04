@@ -10,15 +10,15 @@ class GridView extends React.Component {
             <div>
                 <Row gutter={16}>
                     {
-                        data.map((item, index) => {
+                        // data && data.map((item, index) => {
                             
-                            return(
-                                item.name &&
-                                <Col span={6} key={index}>
-                                    {item.name}
-                                </Col>
-                            )
-                        })
+                        //     return(
+                        //         item.name &&
+                        //         <Col span={6} key={index}>
+                        //             {item.name}
+                        //         </Col>
+                        //     )
+                        // })
                     }
                 </Row>
 

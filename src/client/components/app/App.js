@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import { search } from '../../flipp/flipp';
+// import { search } from '../../flipp/flipp';
 import {Input} from 'antd';
 import GridView from '../gridView/GridView';
 
@@ -10,20 +10,16 @@ const App = () => {
   const [data, setData] = useState(null);
 
   const onSearch = (postalCode) => {
-    search('Hersheys Snack Mixes Bonus', postalCode).then(data => {
-      setData(data.items)
-
       fetch(`/getOffers?postalCode=${postalCode}`)
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result)
+          setData(result);
         },
         (error) => {
           console.log(error)
         }
       )
-    })
   }
 
   return (

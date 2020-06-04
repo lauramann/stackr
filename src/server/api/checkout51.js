@@ -5,23 +5,20 @@ const url = 'https://www.checkout51.com/offers';
 
 const getCheckout51 = async() => {
     return await axios.get(url)
-    .then((response) => {
-      const offers = [];
-      const $ = cheerio.load(response.data);
-      $('.title.normal').each(function(i, elm) {
-        offers.push({
-          offer_name: $(this).find('.offer-name').text(),
-          offer_description: $(this).find('.offer-description').text(),
-          cash_back_amount: $(this).find('.cash-back-amount').text(),
-          cash_back_description: $(this).find('.cash-back-description').text(),
-        });
-      });
-      return(JSON.stringify(offers));
-    })
-    .catch((response) => {console.log("error fetching checkout51 data")})
+        .then((response) => {
+            const offers = [];
+            const $ = cheerio.load(response.data);
+            $('.title.normal').each(function(i, elm) {
+                offers.push({
+                    offer_name: $(this).find('.offer-name').text(),
+                    offer_description: $(this).find('.offer-description').text(),
+                    cash_back_amount: parseFloat($(this).find('.cash-back-amount').text().substring(1)),
+                    cash_back_description: $(this).find('.cash-back-description').text(),
+                });
+            });
+            return (offers);
+        })
+        .catch((error) => { console.log("error fetching checkout51 data", error) })
 }
 
 module.exports = getCheckout51;
-
-
-
