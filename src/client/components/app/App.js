@@ -1,86 +1,63 @@
-import React, {useState} from 'react';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 // import { search } from '../../flipp/flipp';
-import {Input} from 'antd';
-import GridView from '../gridView/GridView';
+// import {Input} from 'antd';
+import { Box, Button, Form, FormField, TextInput, Grommet } from "grommet";
+import GridView from "../gridView/GridView";
 
-const { Search } = Input;
+// const { Search } = Input;
 
 const App = () => {
   const [data, setData] = useState(null);
+  const [value, setValue] = React.useState("");
 
-  const onSearch = (postalCode) => {
-      fetch(`/getOffers?postalCode=${postalCode}`)
-      .then(res => res.json())
+  const onSearch = () => {
+    console.log(value.name)
+    fetch(`/getOffers?postalCode=${value.name}`)
+      .then((res) => res.json())
       .then(
         (result) => {
           setData(result);
         },
         (error) => {
-          console.log(error)
+          console.log(error);
         }
-      )
-  }
-
+      );
+  };
+  
   return (
-    <div className="App">
-      <div style={{margin: 'auto'}}>
+    <Grommet plain>
+      <div style={{ margin: "auto" }}>
         <h1>Enter your postal code to get started...</h1>
-        <Search
+        {/* <Search
           placeholder="Postal code"
           enterButton="Search"
           size="large"
           onSearch={value => onSearch(value)}
           style={{width: '20rem'}}
-        />
+        /> */}
+        <Form
+          value={value}
+          onChange={nextValue => {
+            console.log("Change", nextValue);
+            setValue(nextValue);
+          }}
+          // onReset={() => setValue(defaultValue)}
+          onSubmit={onSearch}
+        >
+          <FormField label="Name" name="name">
+            <TextInput name="name" />
+          </FormField>
+          <Button type="submit" label="Search" primary />
+        </Form>
       </div>
-      { data &&
+      {data && (
         <div>
           <GridView data={data} />
         </div>
-      }
-      
-    </div>
-  )
-}
-
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       data: null
-//     }
-//   }
-
-//   onSearch = (value) => {
-//     search('Hersheys Snack Mixes Bonus', value).then(data => {
-//       this.setState({data: data.items})
-//     })
-//     // getData();
-//   }
-
-//   render() {
-//     return (
-//       <div className="App">
-//         <div style={{margin: 'auto'}}>
-//           <h1>Enter your postal code to get started...</h1>
-//           <Search
-//             placeholder="Postal code"
-//             enterButton="Search"
-//             size="large"
-//             onSearch={value => this.onSearch(value)}
-//             style={{width: '20rem'}}
-//           />
-//         </div>
-//         { this.state.data &&
-//           <div>
-//             <GridView data={this.state.data} />
-//           </div>
-//         }
-        
-//       </div>
-//     )
-//   }
-// }
+      )}
+    </Grommet>
+  );
+};
 
 export default App;
