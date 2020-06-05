@@ -7,17 +7,21 @@ const flipp = require('./api/flipp');
 
 
 app.get('/getOffers', function(req, res) {
-    return checkout51().then(data => {
+    let offers = []
+    checkout51().then(data => {
         data.forEach((offer) => {
-                console.log('OFFER', offer);
+                // console.log('OFFER', offer);
                 // console.log(callFlipp(offer, req.query.postalCode));
                 flipp(offer.offer_name, req.query.postalCode).then(data => {
-                    console.log('FLIPP DEALS', data);
+                    // console.log('FLIPP DEALS', data);
                     // res.send(data);
-                    return { offer, flippItems: data.items }
-                    // arr.push({offer, flippItems: data.items.length})
+                    // return { offer, flippItems: data.items }
+                    offers.push({ offer, flippItems: data.items })
                 })
 
+            }).then(() => {
+                console.log(offers)
+                res.send(offers)
             })
             // res.send(data);
     })
