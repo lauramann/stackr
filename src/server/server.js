@@ -1,48 +1,26 @@
 const express = require('express');
 const app = express();
 
-const getCheckout51 = require('./api/checkout51');
+const checkout51 = require('./api/checkout51');
 const flipp = require('./api/flipp');
 
 
+
 app.get('/getOffers', function(req, res) {
-    let checkoutOffers = getCheckout51()
-
-    // .then(data => {
-    //     let offers = [];
-    //     data.forEach((offer) => {
-    //         // console.log(callFlipp(offer, req.query.postalCode));
-
-
-    //     })
-    //     console.log("OFFERS ARR", offers);
-    //     // res.send(data);
-    // })
-    let flipOffers = checkoutOffers.then(data => {
+    return checkout51().then(data => {
         data.forEach((offer) => {
-            flipp(offer.offer_name, req.query.postalCode).then(data => {
-                return { offer, flippItems: result.items }
-                // .then(data => {
-                //     console.log('OFFER', offer);
-                //     console.log('FLIPP DEALS', data);
-                //     // res.send(data);
-                //     offers.push({ offer, flippItems: data.items.length })
-                //         // arr.push({offer, flippItems: data.items.length})
-                // })
+                console.log('OFFER', offer);
+                // console.log(callFlipp(offer, req.query.postalCode));
+                flipp(offer.offer_name, req.query.postalCode).then(data => {
+                    console.log('FLIPP DEALS', data);
+                    // res.send(data);
+                    return { offer, flippItems: data.items }
+                    // arr.push({offer, flippItems: data.items.length})
+                })
+
             })
-
-        })
+            // res.send(data);
     })
-
-    res.send(flipOffers)
-
-    // flipp(offer.offer_name, req.query.postalCode).then(data => {
-    //     console.log('OFFER', offer);
-    //     console.log('FLIPP DEALS', data);
-    //     // res.send(data);
-    //     offers.push({ offer, flippItems: data.items.length })
-    //         // arr.push({offer, flippItems: data.items.length})
-    // })
 })
 
 

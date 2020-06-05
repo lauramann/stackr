@@ -3,8 +3,8 @@ const cheerio = require('cheerio');
 
 const url = 'https://www.checkout51.com/offers';
 
-const getCheckout51 = async() => {
-    return await axios.get(url)
+const getCheckout51 = () => {
+    return axios.get(url)
         .then((response) => {
             const offers = [];
             const $ = cheerio.load(response.data);
