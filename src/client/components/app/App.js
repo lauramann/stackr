@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import "./App.css";
-import logo from '../../../assets/stackr-logo.png';
+import logo from "../../../assets/stackr-logo.png";
+import wfh from "../../../assets/wfh.svg";
 import {
   Box,
   Button,
-  Heading,
+  Collapsible,
   Form,
   FormField,
-  TextInput,
+  Grid,
   Grommet,
+  TextInput,
 } from "grommet";
 import { Clipboard } from "grommet-icons";
 import GridView from "../gridView/GridView";
@@ -17,6 +19,7 @@ const theme = {
   global: {
     colors: {
       brand: "#672FC6",
+      // text: "#000",
     },
     font: {
       family: "Roboto",
@@ -43,6 +46,7 @@ const AppBar = (props) => (
 const App = () => {
   const [data, setData] = useState(null);
   const [value, setValue] = React.useState("");
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const onSearch = () => {
     fetch(`/getOffers?postalCode=${value.name}`)
@@ -58,31 +62,55 @@ const App = () => {
   };
 
   return (
-    <Grommet theme={theme}>
-      <AppBar>
-        <img src={logo} style={{width: "34%", maxWidth: "160px"}}></img>
-        <Button icon={<Clipboard />} onClick={() => {}} />
-      </AppBar>
-      <div style={{ margin: "auto" }}>
-        <p>Enter your postal code to get started...</p>
-        <Form
-          value={value}
-          onChange={(nextValue) => {
-            setValue(nextValue);
-          }}
-          onSubmit={onSearch}
-        >
-          <FormField name="postalCode">
-            <TextInput name="name" />
-          </FormField>
-          <Button type="submit" label="Search" primary />
-        </Form>
-      </div>
-      {data && (
-        <div>
-          <GridView data={data} />
-        </div>
-      )}
+    <Grommet theme={theme} full>
+      <Box fill>
+        <AppBar>
+          <img src={logo} style={{ width: "34%", maxWidth: "160px" }}></img>
+          <Button
+            icon={<Clipboard />}
+            onClick={() => setShowSidebar(!showSidebar)}
+          />
+        </AppBar>
+        <Box direction="row" flex overflow={{ horizontal: "hidden" }}>
+          <Box flex background={{image: "wfh.svg )"}}>
+          {/* <img src={wfh}></img> */}
+            {/* <img src={wfh}></img>
+            <Form
+              value={value}
+              onChange={(nextValue) => {
+                setValue(nextValue);
+              }}
+              onSubmit={onSearch}
+            >
+              <FormField name="postalCode">
+                <TextInput name="name" />
+              </FormField>
+              <Button type="submit" label="Search" primary color="#C5E590"/>
+            </Form>
+            {data && (
+              <div>
+                <GridView data={data} />
+              </div>
+            )} */}
+          </Box>
+          {showSidebar && (
+            <Collapsible direction="horizontal" open={showSidebar}>
+              {/* <Layer> */}
+              <Box
+                flex
+                width="medium"
+                background="light-2"
+                elevation="small"
+                align="center"
+                justify="center"
+              >
+                sidebar
+              </Box>
+              {/* </Layer> */}
+            </Collapsible>
+          )}
+        </Box>
+      </Box>
     </Grommet>
   );
 };
