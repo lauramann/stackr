@@ -1,18 +1,50 @@
 import React, { useState } from "react";
 import "./App.css";
-// import { search } from '../../flipp/flipp';
-// import {Input} from 'antd';
-import { Box, Button, Form, FormField, TextInput, Grommet } from "grommet";
+import logo from '../../../assets/stackr-logo.png';
+import {
+  Box,
+  Button,
+  Heading,
+  Form,
+  FormField,
+  TextInput,
+  Grommet,
+} from "grommet";
+import { Clipboard } from "grommet-icons";
 import GridView from "../gridView/GridView";
 
-// const { Search } = Input;
+const theme = {
+  global: {
+    colors: {
+      brand: "#672FC6",
+    },
+    font: {
+      family: "Roboto",
+      size: "18px",
+      height: "20px",
+    },
+  },
+};
+
+const AppBar = (props) => (
+  <Box
+    tag="header"
+    direction="row"
+    align="center"
+    justify="between"
+    background="white"
+    pad={{ left: "medium", right: "small", vertical: "small" }}
+    elevation="medium"
+    style={{ zIndex: "1" }}
+    {...props}
+  />
+);
 
 const App = () => {
   const [data, setData] = useState(null);
   const [value, setValue] = React.useState("");
 
   const onSearch = () => {
-    console.log(value.name)
     fetch(`/getOffers?postalCode=${value.name}`)
       .then((res) => res.json())
       .then(
@@ -24,28 +56,23 @@ const App = () => {
         }
       );
   };
-  
+
   return (
-    <Grommet plain>
+    <Grommet theme={theme}>
+      <AppBar>
+        <img src={logo} style={{width: "34%", maxWidth: "160px"}}></img>
+        <Button icon={<Clipboard />} onClick={() => {}} />
+      </AppBar>
       <div style={{ margin: "auto" }}>
-        <h1>Enter your postal code to get started...</h1>
-        {/* <Search
-          placeholder="Postal code"
-          enterButton="Search"
-          size="large"
-          onSearch={value => onSearch(value)}
-          style={{width: '20rem'}}
-        /> */}
+        <p>Enter your postal code to get started...</p>
         <Form
           value={value}
-          onChange={nextValue => {
-            console.log("Change", nextValue);
+          onChange={(nextValue) => {
             setValue(nextValue);
           }}
-          // onReset={() => setValue(defaultValue)}
           onSubmit={onSearch}
         >
-          <FormField label="Name" name="name">
+          <FormField name="postalCode">
             <TextInput name="name" />
           </FormField>
           <Button type="submit" label="Search" primary />
