@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
 import logo from "../../../assets/stackr-logo.png";
-import wfh from "../../../assets/wfh.svg";
+// import wfh from "../../../assets/wfh.svg";
+import wfh from "../../../assets/wfh.png";
 import {
   Box,
   Button,
@@ -10,9 +11,10 @@ import {
   FormField,
   Grid,
   Grommet,
+  Image,
   TextInput,
 } from "grommet";
-import { Clipboard } from "grommet-icons";
+import { Clipboard, Search } from "grommet-icons";
 import GridView from "../gridView/GridView";
 
 const theme = {
@@ -49,7 +51,7 @@ const App = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const onSearch = () => {
-    fetch(`/getOffers?postalCode=${value.name}`)
+    fetch(`/getOffers?postalCode=${value.postalCode}`)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -71,28 +73,40 @@ const App = () => {
             onClick={() => setShowSidebar(!showSidebar)}
           />
         </AppBar>
-        <Box direction="row" flex overflow={{ horizontal: "hidden" }}>
-          <Box flex background={{image: "wfh.svg )"}}>
-          {/* <img src={wfh}></img> */}
-            {/* <img src={wfh}></img>
+        {!data ?
+        <Box
+          direction="row"
+          flex
+          overflow={{ horizontal: "hidden" }}
+          pad="50px"
+        >
+          <Box width="35%" style={{marginRight:"20px"}}>
+            <h2 style={{ fontSize: "3.7em", marginBottom: "10px", lineHeight: "1", color: "#30242A" }}>
+              Finding deals has never been so easy.
+            </h2>
+            <p>
+              Forget scouring the internet for deals - we stack coupons and
+              sales from Checkout51 and flipp to get you the best prices on groceries.
+            </p>
             <Form
               value={value}
               onChange={(nextValue) => {
-                setValue(nextValue);
+                console.log(nextValue);
+                setValue({postalCode: nextValue.postalCode.toUpperCase()});
               }}
               onSubmit={onSearch}
             >
               <FormField name="postalCode">
-                <TextInput name="name" />
+                <TextInput name="postalCode" icon={<Search />} placeholder="Enter your postal code"/>
               </FormField>
-              <Button type="submit" label="Search" primary color="#C5E590"/>
+              <Button type="submit" label="Search" primary color="#C5E590" />
             </Form>
-            {data && (
-              <div>
-                <GridView data={data} />
-              </div>
-            )} */}
+              {/* Show checkout51 and flipp icons greyed out here? */}
           </Box>
+          <Image fit="contain" src={wfh}></Image>
+          {/* <img src={wfh} style={{ width: "140%", objectFit: "contain" }}></img> */}
+
+          {/* <Box flex background={{image: "url(file:///Users/lauramann/Documents/stackr/src/assets/wfh.svg )"}}> */}
           {showSidebar && (
             <Collapsible direction="horizontal" open={showSidebar}>
               {/* <Layer> */}
@@ -109,8 +123,10 @@ const App = () => {
               {/* </Layer> */}
             </Collapsible>
           )}
-        </Box>
-      </Box>
+        </Box> : 
+          <GridView data={data} />
+        }
+      </Box> 
     </Grommet>
   );
 };
