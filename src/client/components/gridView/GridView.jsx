@@ -1,23 +1,24 @@
 import React from "react";
-import { Box, Grid, Heading, ResponsiveContext } from 'grommet';
+// import { Box, Grid, Heading, ResponsiveContext } from 'grommet';
+import {Box} from 'grommet';
 
-import { deepMerge } from "grommet/utils";
+// import { deepMerge } from "grommet/utils";
 
-const customBreakpoints = deepMerge(grommet, {
-  global: {
-    breakpoints: {
-      small: {
-        value: 600,
-      },
-      medium: {
-        value: 900,
-      },
-      large: {
-        value: 3000,
-      },
-    },
-  },
-});
+// const customBreakpoints = deepMerge(grommet, {
+//   global: {
+//     breakpoints: {
+//       small: {
+//         value: 600,
+//       },
+//       medium: {
+//         value: 900,
+//       },
+//       large: {
+//         value: 3000,
+//       },
+//     },
+//   },
+// });
 
 // const dealBoxes = animals.map((animalName) => (
 //   <Box
@@ -33,11 +34,11 @@ const customBreakpoints = deepMerge(grommet, {
 // ));
 
 function GridView(data) {
-  console.log(data);
+  console.log("DATA", data.data);
   return (
     <Box direction="row" flex overflow={{ horizontal: "hidden" }} pad="50px">
-      {data &&
-        data.map((item, index) => {
+      {data.data &&
+        data.data.map((item, index) => {
           return (
             item.offer &&
             item.flippItems && (
