@@ -34,7 +34,7 @@ const App = () => {
 
   const onSearch = () => {
     console.log("inital localStorage", localStorage);
-    let cacheKey = '' + value.postalCode
+    let cacheKey = '' + value.postalCode.replace(" ", "");
     let cachedData = localStorage.getItem(cacheKey);
     if(cachedData) {
       setData(JSON.parse(cachedData));
