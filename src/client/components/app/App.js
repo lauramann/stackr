@@ -71,7 +71,7 @@ const App = () => {
               >
                 Finding deals has never been so easy.
               </h2>
-              <p>
+              <p style={{fontWeight:"300"}}>
                 Forget scouring the internet for deals - we stack coupons and
                 sales from Checkout51 and flipp to get you the best prices on
                 groceries.
