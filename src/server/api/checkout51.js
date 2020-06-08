@@ -12,8 +12,9 @@ const getCheckout51 = () => {
                 offers.push({
                     offer_name: $(this).find('.offer-name').text(),
                     offer_description: $(this).find('.offer-description').text(),
+                    offer_img: $(this).find('img').attr('src'),
                     cash_back_amount: parseFloat($(this).find('.cash-back-amount').text().substring(1)),
-                    cash_back_description: $(this).find('.cash-back-description').text(),
+                    cash_back_description: $(this).find('.cash-back-description').text()
                 });
             });
             return (offers);
