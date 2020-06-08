@@ -33,16 +33,27 @@ const App = () => {
   // const [showSidebar, setShowSidebar] = useState(false);
 
   const onSearch = () => {
-    fetch(`/getOffers?postalCode=${value.postalCode}`)
+    console.log("inital localStorage", localStorage);
+    let cacheKey = '' + value.postalCode
+    let cachedData = localStorage.getItem(cacheKey);
+    if(cachedData) {
+      setData(JSON.parse(cachedData));
+    }
+    else {
+      fetch(`/getOffers?postalCode=${value.postalCode}`)
       .then((res) => res.json())
       .then(
         (result) => {
           setData(result);
+          localStorage.setItem(cacheKey, JSON.stringify(result));
+          console.log("LOCAL Storage after being set", localStorage);
         },
         (error) => {
           console.log("error");
         }
       );
+    }
+    
   };
 
   return (
@@ -55,19 +66,13 @@ const App = () => {
             flex
             overflow={{ horizontal: "hidden" }}
             pad="50px"
+            className="app-body"
           >
-            <Box width="35%" style={{ marginRight: "20px" }}>
-              <h2
-                style={{
-                  fontSize: "3.7em",
-                  marginBottom: "10px",
-                  lineHeight: "1",
-                  color: "#30242A",
-                }}
-              >
+            <Box className="main-copy__conatiner" width="35%">
+              <h2 className="promo-title">
                 Finding deals has never been so easy.
               </h2>
-              <p style={{fontWeight:"300"}}>
+              <p>
                 Forget scouring the internet for deals - we stack coupons and
                 sales from Checkout51 and flipp to get you the best prices on
                 groceries.
@@ -91,9 +96,6 @@ const App = () => {
               {/* Show checkout51 and flipp icons greyed out here? */}
             </Box>
             <Image fit="contain" src={wfh}></Image>
-            {/* <img src={wfh} style={{ width: "140%", objectFit: "contain" }}></img> */}
-
-            {/* <Box flex background={{image: "url(file:///Users/lauramann/Documents/stackr/src/assets/wfh.svg )"}}> */}
             {/* {showSidebar && (
             <Collapsible direction="horizontal" open={showSidebar}>
               <Box

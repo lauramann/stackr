@@ -1,5 +1,3 @@
-/* @import "~antd/dist/antd.css"; */
-
 .App {
     text-align: center;
     margin: 1rem;
@@ -24,6 +22,21 @@
 
 .App-link {
     color: #61dafb;
+}
+
+.main-copy__conatiner {
+    margin-right: 20px;
+}
+
+.promo-title {
+    font-size: 3.7em;
+    margin-bottom: 10px;
+    line-height: 1;
+    color: #30242A;
+}
+
+.main-copy__conatiner p {
+    font-weight: 300;
 }
 
 @keyframes App-logo-spin {
