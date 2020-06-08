@@ -44,7 +44,7 @@ const App = () => {
           setData(result);
         },
         (error) => {
-          console.log(error);
+          console.log("error");
         }
       );
   };
@@ -79,7 +79,6 @@ const App = () => {
               <Form
                 value={value}
                 onChange={(nextValue) => {
-                  console.log(nextValue);
                   setValue({ postalCode: nextValue.postalCode.toUpperCase() });
                 }}
                 onSubmit={onSearch}
