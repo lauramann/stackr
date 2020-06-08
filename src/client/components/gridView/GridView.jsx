@@ -1,8 +1,7 @@
 import React from "react";
-import { Box, Grid } from "grommet";
-// import { Add } from "grommet-icons";
+import { Avatar, Box, Grid } from "grommet";
 import AppBar from "../app/AppBar";
-import Card from "./Card";
+import GridRow from './GridRow';
 
 const GridView = ({ data, postalCode }) => {
   console.log("DATA", data);
@@ -22,43 +21,20 @@ const GridView = ({ data, postalCode }) => {
             return (
               item.offer &&
               item.flippItems.length > 0 && (
-                // <Box
-                //   style={{ marginBottom: "20px",display: "flex", flexDirection: "row" }}
-                // >
-                <Grid
-                  columns={["30%", "70%"]}
-                  gap="small"
-                  style={{ marginBottom: "20px" }}
-                >
-                  <Box round="medium" background="#FFF" pad="20px">
-                    <p>Checkout51 Offer: </p>
-                    <img
-                      src={item.offer.offer_img}
-                      style={{ maxWidth: "100px" }}
-                    ></img>
-                    <p>{item.offer.offer_name}</p>
-                  </Box>
-                  <Grid
-                    style={{
-                      overflowX: "scroll",
-                      overflowY: "hidden",
-                      whiteSpace: "nowrap",
-                      gridTemplateColumns: "repeat(" + item.flippItems.length + ", calc(44% - 40px))"
-                    }}
-                    // repeat(5, calc(44% - 40px))
-                    gap="small"
-                  >
-                    {item.flippItems.map((flipp, i) => {
-                      return <Card flippItem={flipp} />;
-                    })}
+                <Box>
+                  <Grid columns={["min-content", "auto"]} gap="small">
+                    <Avatar src={item.offer.offer_img}/>
+                    <Box style={{justifyContent:"center"}}>
+                      <p style={{ fontSize: "16px", fontWeight: "500", color: "green", margin: "0" }}>${item.offer.cash_back_amount} cash back</p>
+                      <p style={{ fontSize: "20px", fontWeight: "500", color: "black", margin: "0" }}>{item.offer.offer_name}</p>
+                    </Box>
                   </Grid>
-                </Grid>
+                  <p style={{ fontSize: "14px"}}>{item.offer.offer_description}</p>
+                  <GridRow item={item}/>
+                </Box>
               )
             );
           })}
-        {/* <Row gutter={16}>
-
-                </Row> */}
       </Box>
     </Box>
   );

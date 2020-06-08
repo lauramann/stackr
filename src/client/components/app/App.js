@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
-// import wfh from "../../../assets/wfh.svg";
 import wfh from "../../../assets/wfh.png";
 import {
   Box,
   Button,
-  Collapsible,
   Form,
   FormField,
-  Grid,
   Grommet,
   Image,
   TextInput,
@@ -21,7 +18,6 @@ const theme = {
   global: {
     colors: {
       brand: "#4756DF",
-      // text: "#000",
     },
     font: {
       family: "Roboto",
