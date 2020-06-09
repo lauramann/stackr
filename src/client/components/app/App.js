@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./App.css";
 import wfh from "../../../assets/wfh.png";
-import { Box, Form, Grommet, Image, Keyboard, Text, TextInput } from "grommet";
+import { Box, Form, Grid, Grommet, Image, Keyboard, Text, TextInput } from "grommet";
 import { Search } from "grommet-icons";
+import Lottie from "react-lottie";
 import GridView from "../gridView/GridView";
 import AppBar from "./AppBar";
+import * as animationData from "../../../assets/food.json";
 
 const theme = {
   global: {
@@ -23,17 +25,20 @@ const App = () => {
   const [data, setData] = useState(null);
   const [value, setValue] = React.useState("");
   const [message, setMessage] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const regex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
 
   const onSearch = () => {
     if (!regex.test(value.postalCode))
       setMessage("Please enter a valid postal code");
     else {
+      setLoading(true);
       setMessage("");
       fetch(`/getOffers?postalCode=${value.postalCode}`)
         .then((res) => res.json())
         .then(
           (result) => {
+            setLoading(false);
             setData(result);
           },
           (error) => {
@@ -43,11 +48,20 @@ const App = () => {
     }
   };
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData.default,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   return (
     <Grommet theme={theme} full>
       {!data ? (
         <Box fill>
-          <AppBar disabledClipButton/>
+          <AppBar disabledClipButton />
           <Box
             direction="row"
             flex
@@ -64,23 +78,31 @@ const App = () => {
                 sales from Checkout51 and flipp to get you the best prices on
                 groceries.
               </p>
-              <Form
-                value={value}
-                onChange={(nextValue) => {
-                  setValue({ postalCode: nextValue.postalCode.toUpperCase() });
-                }}
-              >
-                <Keyboard onEnter={onSearch}>
-                  <TextInput
-                    name="postalCode"
-                    icon={<Search />}
-                    placeholder="Enter your postal code"
-                  />
-                </Keyboard>
-                <Box pad={{ horizontal: "small" }}>
-                  <Text color="status-error">{message}</Text>
+              <Grid columns={["80%", "20%"]} gap="small">
+                <Form
+                  value={value}
+                  onChange={(nextValue) => {
+                    setValue({
+                      postalCode: nextValue.postalCode.toUpperCase(),
+                    });
+                  }}
+                >
+                  <Keyboard onEnter={onSearch}>
+                    <TextInput
+                      name="postalCode"
+                      icon={<Search />}
+                      placeholder="Enter your postal code"
+                    />
+                  </Keyboard>
+                  <Box pad={{ horizontal: "small" }}>
+                    <Text color="status-error">{message}</Text>
+                  </Box>
+                </Form>
+                <Box>
+                  {loading && <Lottie options={defaultOptions}/>}
                 </Box>
-              </Form>
+              </Grid>
+
               {/* Show checkout51 and flipp icons greyed out here? */}
             </Box>
             <Image fit="contain" src={wfh} />

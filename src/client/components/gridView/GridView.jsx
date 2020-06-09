@@ -8,7 +8,7 @@ const GridView = ({ data, postalCode }) => {
   return (
     <Box>
       <AppBar disabledClipButton={false} postalCode={postalCode}/>
-      <Box pad="50px" background="#F3EEEB" className="grid-view__container">
+      <Box pad="50px" background="#fbf8f4" className="grid-view__container">
         <Box align="center" className="results-copy__container">
           <p>These are the latest deals for your area:</p>
           <h3>{postalCode}</h3>

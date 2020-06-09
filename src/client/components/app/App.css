@@ -50,6 +50,11 @@
     font-weight: 300;
 }
 
+/* Lottie loading animation */
+.loading-animation {
+    margin-top: 20px;
+}
+
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);
@@ -58,3 +63,4 @@
         transform: rotate(360deg);
     }
 }
+
