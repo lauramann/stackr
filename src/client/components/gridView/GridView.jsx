@@ -7,7 +7,7 @@ import "./GridView.css";
 const GridView = ({ data, postalCode }) => {
   return (
     <Box>
-      <AppBar />
+      <AppBar disabledClipButton={false} postalCode={postalCode}/>
       <Box pad="50px" background="#F3EEEB" className="grid-view__container">
         <Box align="center" className="results-copy__container">
           <p>These are the latest deals for your area:</p>
@@ -20,7 +20,7 @@ const GridView = ({ data, postalCode }) => {
               item.flippItems.length > 0 && (
                 <Box className="results-data__container">
                   <Grid columns={["min-content", "auto"]} gap="small">
-                    <Avatar src={item.offer.offer_img} size="medium"/>
+                    <Avatar src={item.offer.offer_img} size="medium" />
                     <Box>
                       <Box className="c51__container">
                         <p className="c51-amount">

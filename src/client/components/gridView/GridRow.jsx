@@ -9,11 +9,10 @@ const GridRow = ({ item }) => {
       className="grid-row__container"
       gap="small"
       style={{
-        gridTemplateColumns:
-          "repeat(" + item.flippItems.length + ", 300px)",
+        gridTemplateColumns: "repeat(" + item.flippItems.length + ", 300px)",
       }}
     >
-      {item.flippItems.slice(0,5).map((flipp, i) => {
+      {item.flippItems.slice(0, 5).map((flipp, i) => {
         return <Card flippItem={flipp} />;
       })}
     </Grid>

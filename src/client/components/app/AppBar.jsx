@@ -1,9 +1,15 @@
 import React from "react";
 import logo from "../../../assets/stackr-logo.png";
 import { Box, Button } from "grommet";
-import { Clipboard } from "grommet-icons";
+import { Cut } from "grommet-icons";
+import './App.css';
 
-const AppBar = () => {
+const AppBar = ({ disabledClipButton, postalCode }) => {
+  console.log(disabledClipButton);
+  const reloadPage = () => {
+    window.location.reload(false);
+  };
+
   return (
     <Box
       tag="header"
@@ -15,11 +21,19 @@ const AppBar = () => {
       elevation="medium"
       style={{ zIndex: "1" }}
     >
-      <img src={logo} style={{ width: "34%", maxWidth: "160px" }}></img>
-      <Button
-        icon={<Clipboard />}
-        // onClick={() => setShowSidebar(!showSidebar)}
-      />
+      <img
+        src={logo}
+        className="app-bar__logo"
+        style={{ width: "34%", maxWidth: "160px" }}
+        onClick={reloadPage}
+      ></img>
+      {!disabledClipButton && (
+        <Button
+          icon={<Cut />}
+          href={`https://flipp.com/flyers?postal_code=${postalCode}`}
+          target="_blank"
+        />
+      )}
     </Box>
   );
 };

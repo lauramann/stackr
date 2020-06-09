@@ -1,23 +1,23 @@
 const express = require("express");
 const app = express();
 
-const checkout51 = require("./api/checkout51");
-const flipp = require("./api/flipp");
+const checkout51Offers = require("./api/checkout51");
+const flippOffers = require("./api/flipp");
 
-app.get("/getOffers", function(req, res) {
-    console.log("scraping Checkout51...")
-    checkout51().then((data) => {
-        let offers = [];
-        console.log("calling flip api...")
-        data.forEach((offer) => {
-            flipp(offer.offer_name, req.query.postalCode).then((flyer) => {
-                offers.push({ offer, flippItems: flyer.items });
-                if (offers.length === data.length) {
-                    res.send(offers);
-                }
-            });
-        });
+app.get("/getOffers", function (req, res) {
+  console.log("Scraping Checkout51...");
+  checkout51Offers().then((data) => {
+    let offers = [];
+    console.log("Calling flip api...");
+    data.forEach((offer) => {
+      flippOffers(offer.offer_name, req.query.postalCode).then((clippings) => {
+        offers.push({ offer, flippItems: clippings.items });
+        if (offers.length === data.length) {
+          res.send(offers);
+        }
+      });
     });
+  });
 });
 
 app.listen("8081");
