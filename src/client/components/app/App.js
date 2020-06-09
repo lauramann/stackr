@@ -8,6 +8,7 @@ import {
   FormField,
   Grommet,
   Image,
+  Keyboard,
   TextInput,
 } from "grommet";
 import { Search } from "grommet-icons";
@@ -30,29 +31,19 @@ const theme = {
 const App = () => {
   const [data, setData] = useState(null);
   const [value, setValue] = React.useState("");
-  // const [showSidebar, setShowSidebar] = useState(false);
 
   const onSearch = () => {
-    console.log("inital localStorage", localStorage);
-    let cacheKey = '' + value.postalCode.replace(" ", "");
-    let cachedData = localStorage.getItem(cacheKey);
-    if(cachedData) {
-      setData(JSON.parse(cachedData));
-    }
-    else {
       fetch(`/getOffers?postalCode=${value.postalCode}`)
       .then((res) => res.json())
       .then(
         (result) => {
           setData(result);
-          localStorage.setItem(cacheKey, JSON.stringify(result));
-          console.log("LOCAL Storage after being set", localStorage);
         },
         (error) => {
-          console.log("error");
+          console.log("error", error);
         }
       );
-    }
+    // }
     
   };
 
@@ -82,34 +73,19 @@ const App = () => {
                 onChange={(nextValue) => {
                   setValue({ postalCode: nextValue.postalCode.toUpperCase() });
                 }}
-                onSubmit={onSearch}
               >
-                <FormField name="postalCode">
+                <Keyboard onEnter={onSearch}>
                   <TextInput
                     name="postalCode"
                     icon={<Search />}
                     placeholder="Enter your postal code"
                   />
-                </FormField>
-                <Button type="submit" label="Search" primary color="brand" />
+                </Keyboard>
+                  
               </Form>
               {/* Show checkout51 and flipp icons greyed out here? */}
             </Box>
             <Image fit="contain" src={wfh}></Image>
-            {/* {showSidebar && (
-            <Collapsible direction="horizontal" open={showSidebar}>
-              <Box
-                flex
-                width="medium"
-                background="light-2"
-                elevation="small"
-                align="center"
-                justify="center"
-              >
-                sidebar
-              </Box>
-            </Collapsible>
-          )} */}
           </Box>
         </Box>
       ) : (

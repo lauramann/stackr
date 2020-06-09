@@ -18,6 +18,7 @@ const getCheckout51 = () => {
                 });
             });
             return (offers);
+            
         })
         .catch((error) => { console.log("error fetching checkout51 data", error) })
 }

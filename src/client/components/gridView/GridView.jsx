@@ -5,9 +5,6 @@ import GridRow from "./GridRow";
 import "./GridView.css";
 
 const GridView = ({ data, postalCode }) => {
-  console.log("DATA", data);
-  console.log(JSON.stringify(data));
-  console.log("POSTAL CODE", postalCode);
   return (
     <Box>
       <AppBar />
@@ -17,7 +14,7 @@ const GridView = ({ data, postalCode }) => {
           <h3>{postalCode}</h3>
         </Box>
         {data &&
-          data.slice(0, 15).map((item, index) => {
+          data.map((item, index) => {
             return (
               item.offer &&
               item.flippItems.length > 0 && (
@@ -27,7 +24,7 @@ const GridView = ({ data, postalCode }) => {
                     <Box>
                       <Box className="c51__container">
                         <p className="c51-amount">
-                          ${item.offer.cash_back_amount} cash back
+                          ${item.offer.cash_back_amount.toFixed(2)} Cash Back
                         </p>
                         <p className="c51-name">{item.offer.offer_name}</p>
                       </Box>

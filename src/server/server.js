@@ -5,8 +5,10 @@ const checkout51 = require("./api/checkout51");
 const flipp = require("./api/flipp");
 
 app.get("/getOffers", function(req, res) {
+    console.log("scraping Checkout51...")
     checkout51().then((data) => {
         let offers = [];
+        console.log("calling flip api...")
         data.forEach((offer) => {
             flipp(offer.offer_name, req.query.postalCode).then((flyer) => {
                 offers.push({ offer, flippItems: flyer.items });
